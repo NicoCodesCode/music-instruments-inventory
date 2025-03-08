@@ -12,4 +12,9 @@ exports.validateInstrumentData = [
     .withMessage("Specifications field can't be empty")
     .isLength({ max: 200 })
     .withMessage("Specifications must be less than 200 characters"),
+  body("adminPassword")
+    .notEmpty()
+    .withMessage("Please enter the admin password")
+    .equals({ comparison: process.env.ADMIN_PASSWORD })
+    .withMessage("Wrong admin password"),
 ];
