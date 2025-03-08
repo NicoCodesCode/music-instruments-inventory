@@ -1,9 +1,8 @@
 const { Router } = require("express");
+const instrumentsController = require("../controllers/instrumentsController");
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello, World");
-});
+router.get("/", instrumentsController.renderAllInstruments);
 
 module.exports = router;
