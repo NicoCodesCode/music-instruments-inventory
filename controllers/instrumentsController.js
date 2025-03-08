@@ -1,4 +1,8 @@
+const { validationResult } = require("express-validator");
 const db = require("../db/queries");
+const {
+  validateInstrumentData,
+} = require("../validations/instrumentValidator");
 
 exports.getAllInstruments = async (req, res, next) => {
   const categoryQuery = req.query.category;
@@ -34,6 +38,15 @@ exports.renderEditInstrumentForm = async (req, res, next) => {
 
   try {
     const instrument = await db.getInstrumentDetailsById(instrumentId);
+
+    if (req.errors) {
+      return res.status(400).render("editInstrumentForm", {
+        title: `Edit ${instrument.model_name}`,
+        instrument,
+        errors: req.errors,
+      });
+    }
+
     res.render("editInstrumentForm", {
       title: `Edit ${instrument.model_name}`,
       instrument,
@@ -43,14 +56,24 @@ exports.renderEditInstrumentForm = async (req, res, next) => {
   }
 };
 
-exports.editInstrument = async (req, res, next) => {
-  const instrumentId = Number(req.params.instrumentId);
-  const newInstrumentData = req.body;
+exports.editInstrument = [
+  validateInstrumentData,
+  async (req, res, next) => {
+    const errors = validationResult(req);
 
-  try {
-    await db.editInstrument(instrumentId, newInstrumentData);
-    res.redirect(`/instruments/${instrumentId}`);
-  } catch (error) {
-    next(error);
-  }
-};
+    if (!errors.isEmpty()) {
+      req.errors = errors.array();
+      return next();
+    }
+
+    const instrumentId = Number(req.params.instrumentId);
+    const newInstrumentData = req.body;
+
+    try {
+      await db.editInstrument(instrumentId, newInstrumentData);
+      res.redirect(`/instruments/${instrumentId}`);
+    } catch (error) {
+      next(error);
+    }
+  },
+];

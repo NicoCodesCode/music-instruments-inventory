@@ -5,10 +5,12 @@ const router = Router();
 
 router.get("/:instrumentId", instrumentsController.getInstrumentById);
 
-router.get(
-  "/:instrumentId/edit",
-  instrumentsController.renderEditInstrumentForm
-);
-router.put("/:instrumentId/edit", instrumentsController.editInstrument);
+router
+  .route("/:instrumentId/edit")
+  .get(instrumentsController.renderEditInstrumentForm)
+  .put(
+    instrumentsController.editInstrument,
+    instrumentsController.renderEditInstrumentForm
+  );
 
 module.exports = router;

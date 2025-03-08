@@ -33,6 +33,11 @@
       >
       <label for="admin-password">Admin Password: </label>
       <input type="password" name="adminPassword" required />
+      <ul>
+        <% if (locals.errors) { locals.errors.map(error => { %>
+        <li><%= error.msg %></li>
+        <% })} %>
+      </ul>
       <button type="submit">Update</button>
       <a href="/instruments/<%= instrument.instrument_id %>">
         <button type="button">Go Back</button>

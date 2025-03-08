@@ -15,6 +15,8 @@ exports.validateInstrumentData = [
   body("adminPassword")
     .notEmpty()
     .withMessage("Please enter the admin password")
-    .equals({ comparison: process.env.ADMIN_PASSWORD })
+    .custom((password) =>
+      password === process.env.ADMIN_PASSWORD ? true : false
+    )
     .withMessage("Wrong admin password"),
 ];
