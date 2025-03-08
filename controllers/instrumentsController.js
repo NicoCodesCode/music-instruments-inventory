@@ -28,3 +28,19 @@ exports.getInstrumentById = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.renderEditInstrumentForm = async (req, res, next) => {
+  const instrumentId = Number(req.params.instrumentId);
+  const instrument = await db.getInstrumentDetailsById(instrumentId);
+  res.render("editInstrumentForm", {
+    title: `Edit ${instrument.model_name}`,
+    instrument,
+  });
+};
+
+exports.editInstrument = async (req, res, next) => {
+  const instrumentId = Number(req.params.instrumentId);
+  const newInstrumentData = req.body;
+  await db.editInstrument(instrumentId, newInstrumentData);
+  res.redirect(`/instruments/${instrumentId}`);
+};

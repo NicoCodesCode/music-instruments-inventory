@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form
+      action="/instruments/<%= instrument.instrument_id %>/edit?_method=PUT"
+      method="POST"
+    >
+      <label>Status:</label>
+      <input type="radio" name="newStatus" id="in-stock" value="In Stock" <%=
+      instrument.status_name === "In Stock" ? "checked" : "" %> required />
+      <label for="in-stock">In Stock</label>
+      <input type="radio" name="newStatus" id="sold-out" value="Sold Out" <%=
+      instrument.status_name === "Sold Out" ? "checked" : "" %> />
+      <label for="sold-out">Sold Out</label>
+      <label for="newPrice">Price: </label>
+      <input
+        type="number"
+        name="newPrice"
+        id="price"
+        value="<%= instrument.price %>"
+        step=".01"
+        required
+      />
+      <label for="specifications">Specs: </label>
+      <textarea name="newSpecifications" id="specifications" required>
+<%= instrument.specifications %></textarea
+      >
+      <label for="admin-password">Admin Password: </label>
+      <input type="password" required />
+      <button type="submit">Update</button>
+      <a href="/instruments/<%= instrument.instrument_id %>">
+        <button type="button">Go Back</button>
+      </a>
+    </form>
+  </body>
+</html>

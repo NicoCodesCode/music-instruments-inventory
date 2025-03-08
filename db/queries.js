@@ -20,3 +20,23 @@ exports.getInstrumentDetailsById = async (instrumentId) => {
   const { rows } = await pool.query(sqlQuery, [instrumentId]);
   return rows[0];
 };
+
+exports.editInstrument = async (instrumentId, newInstrumentData) => {
+  console.log(newInstrumentData);
+  const updateStatusAndPrice =
+    "UPDATE instruments SET status_id = (SELECT status_id FROM status WHERE status_name = $1), price = $2 WHERE instrument_id = $3";
+
+  const updateSpecs =
+    "UPDATE models SET specifications = $1 WHERE model_id = (SELECT model_id FROM instruments WHERE instrument_id = $2)";
+
+  await pool.query(updateStatusAndPrice, [
+    newInstrumentData.newStatus,
+    Number(newInstrumentData.newPrice),
+    instrumentId,
+  ]);
+
+  await pool.query(updateSpecs, [
+    newInstrumentData.newSpecifications,
+    instrumentId,
+  ]);
+};
