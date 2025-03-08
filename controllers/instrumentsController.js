@@ -1,6 +1,6 @@
 const db = require("../db/queries");
 
-exports.renderAllInstruments = async (req, res, next) => {
+exports.getAllInstruments = async (req, res, next) => {
   const categoryQuery = req.query.category;
 
   let instruments = {};
@@ -12,4 +12,13 @@ exports.renderAllInstruments = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.getInstrumentById = async (req, res, next) => {
+  const { instrumentId } = req.params;
+  const instrument = await db.getInstrumentDetailsById(Number(instrumentId));
+  res.render("instrument", {
+    title: instrument.model_name,
+    instrument,
+  });
 };

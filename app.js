@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const indexRouter = require("./routes/index");
+const indexRouter = require("./routes/indexRouter");
+const instrumentsRouter = require("./routes/instrumentsRouter");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/instruments", instrumentsRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

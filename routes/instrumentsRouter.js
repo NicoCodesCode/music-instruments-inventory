@@ -3,6 +3,6 @@ const instrumentsController = require("../controllers/instrumentsController");
 
 const router = Router();
 
-router.get("/", instrumentsController.renderAllInstruments);
+router.get("/:instrumentId", instrumentsController.getInstrumentById);
 
 module.exports = router;
