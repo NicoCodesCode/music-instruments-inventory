@@ -21,9 +21,9 @@
       <ul>
         <% instruments.map(instrument => { %>
         <li><%= instrument.brand_name.concat(" ", instrument.model_name) %></li>
-        <a href="/instruments/<%= instrument.instrument_id %>"
-          ><button>See Details</button></a
-        >
+        <a href="/instruments/<%= instrument.instrument_id %>">
+          <button>See Details</button>
+        </a>
         <% }) %>
       </ul>
     </section>
