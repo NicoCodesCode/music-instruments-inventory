@@ -7,6 +7,12 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <img
+      src="/images/instrument-<%= instrument.instrument_id %>.jpg"
+      alt="<%= instrument.model_name %> image"
+      width="200"
+      height="200"
+    />
     <p>Instrument ID: <%= instrument.instrument_id %></p>
     <p>Brand: <%= instrument.brand_name %></p>
     <p>Made in <%= instrument.country %></p>
