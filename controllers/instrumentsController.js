@@ -1,6 +1,12 @@
 const db = require("../db/queries");
 
 exports.renderAllInstruments = async (req, res) => {
-  const instruments = await db.getAllInstruments();
-  res.render("index", { title: "Instruments", instruments });
+  const categoryQuery = req.query.category;
+
+  let instruments = {};
+
+  if (!categoryQuery) instruments = await db.getAllInstruments();
+  else instruments = await db.getInstrumentsByCategory(categoryQuery);
+
+  res.render("index", { title: "Instruments Inventory", instruments });
 };

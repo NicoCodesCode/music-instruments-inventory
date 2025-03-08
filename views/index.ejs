@@ -7,6 +7,12 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <h2>Category:</h2>
+    <a href="/"><p>All</p></a>
+    <a href="/?category=Guitar"><p>Guitars</p></a>
+    <a href="/?category=Bass"><p>Bass</p></a>
+    <a href="/?category=Drums"><p>Drums</p></a>
+    <a href="/?category=Keyboard"><p>Keyboard</p></a>
     <ul>
       <% instruments.map(instrument => { %>
       <li><%= instrument.brand_name.concat(" ", instrument.model_name) %></li>
