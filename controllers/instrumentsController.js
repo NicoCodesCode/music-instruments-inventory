@@ -15,10 +15,10 @@ exports.getAllInstruments = async (req, res, next) => {
 };
 
 exports.getInstrumentById = async (req, res, next) => {
-  const { instrumentId } = req.params;
+  const instrumentId = Number(req.params.instrumentId);
 
   try {
-    const instrument = await db.getInstrumentDetailsById(Number(instrumentId));
+    const instrument = await db.getInstrumentDetailsById(instrumentId);
     res.render("instrument", {
       title: instrument.model_name,
       instrument,
