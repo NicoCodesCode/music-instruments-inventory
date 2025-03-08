@@ -77,3 +77,7 @@ exports.editInstrument = [
     }
   },
 ];
+
+exports.renderAddInstrumentForm = (req, res) => {
+  res.render("addInstrumentForm", { title: "Add Instrument" });
+};
