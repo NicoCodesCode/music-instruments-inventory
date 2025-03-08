@@ -16,9 +16,15 @@ exports.getAllInstruments = async (req, res, next) => {
 
 exports.getInstrumentById = async (req, res, next) => {
   const { instrumentId } = req.params;
-  const instrument = await db.getInstrumentDetailsById(Number(instrumentId));
-  res.render("instrument", {
-    title: instrument.model_name,
-    instrument,
-  });
+
+  try {
+    const instrument = await db.getInstrumentDetailsById(Number(instrumentId));
+    res.render("instrument", {
+      title: instrument.model_name,
+      instrument,
+    });
+  } catch (error) {
+    error.statusCode = 404;
+    next(error);
+  }
 };

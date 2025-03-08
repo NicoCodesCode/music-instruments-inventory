@@ -17,7 +17,7 @@ app.use((err, req, res, next) => {
   console.error(err);
   res
     .status(err.statusCode || 500)
-    .render("error", { title: "Error", message: "Internal Server Error :C" });
+    .render("error", { title: "Error", message: "Something Went Wrong :C" });
 });
 
 const PORT = process.env.PORT || 3000;
