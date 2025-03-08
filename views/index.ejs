@@ -20,10 +20,18 @@
     <section>
       <ul>
         <% instruments.map(instrument => { %>
-        <li><%= instrument.brand_name.concat(" ", instrument.model_name) %></li>
-        <a href="/instruments/<%= instrument.instrument_id %>">
-          <button>See Details</button>
-        </a>
+        <li>
+          <img
+            src="instrument-<%= instrument.instrument_id %>.jpg"
+            alt="<%= instrument.model_name %> image"
+            width="200"
+            height="200"
+          />
+          <p><%= instrument.brand_name.concat(" ", instrument.model_name) %></p>
+          <a href="/instruments/<%= instrument.instrument_id %>">
+            <button>See Details</button>
+          </a>
+        </li>
         <% }) %>
       </ul>
     </section>
