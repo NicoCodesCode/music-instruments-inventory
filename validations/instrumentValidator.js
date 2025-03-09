@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-exports.validateInstrumentData = [
+exports.validateEditInstrument = [
   body("newStatus").notEmpty().withMessage("Please select a status"),
   body("newPrice")
     .notEmpty()
