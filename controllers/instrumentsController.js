@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const db = require("../db/queries");
-const validations = require("../validations/instrumentValidator");
+const instrumentValidator = require("../validations/instrumentValidator");
+const { validateAdminPassword } = require("../validations/passwordValidator");
 
 exports.getAllInstruments = async (req, res, next) => {
   const categoryQuery = req.query.category;
@@ -55,7 +56,8 @@ exports.renderEditInstrumentForm = async (req, res, next) => {
 };
 
 exports.editInstrument = [
-  validations.validateEditInstrument,
+  instrumentValidator.validateEditInstrument,
+  validateAdminPassword,
   async (req, res, next) => {
     const errors = validationResult(req);
 
@@ -76,26 +78,23 @@ exports.editInstrument = [
   },
 ];
 
-exports.renderAddInstrumentForm = async (req, res, next) => {
-  try {
-    const models = await db.getAllModels();
+exports.renderAddInstrumentForm = (req, res, next) => {
+  const models = req.models;
 
-    if (req.errors) {
-      return res.status(400).render("addInstrumentForm", {
-        title: "Add Instrument",
-        models,
-        errors: req.errors,
-      });
-    }
-
-    res.render("addInstrumentForm", { title: "Add Instrument", models });
-  } catch (error) {
-    next(error);
+  if (req.errors) {
+    return res.status(400).render("addInstrumentForm", {
+      title: "Add Instrument",
+      models,
+      errors: req.errors,
+    });
   }
+
+  res.render("addInstrumentForm", { title: "Add Instrument", models });
 };
 
 exports.addInstrument = [
-  validations.validateNewInstrument,
+  instrumentValidator.validateNewInstrument,
+  validateAdminPassword,
   async (req, res, next) => {
     const errors = validationResult(req);
 
@@ -133,7 +132,7 @@ exports.renderDeleteInstrument = (req, res) => {
 };
 
 exports.deleteInstrument = [
-  validations.validateAdminPassword,
+  validateAdminPassword,
   async (req, res, next) => {
     const errors = validationResult(req);
 

@@ -1,9 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const methodOverride = require("method-override");
 const indexRouter = require("./routes/indexRouter");
 const instrumentsRouter = require("./routes/instrumentsRouter");
-const methodOverride = require("method-override");
+const modelsRouter = require("./routes/modelsRouter");
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(methodOverride("_method"));
 
 app.use("/", indexRouter);
 app.use("/instruments", instrumentsRouter);
+app.use("/models", modelsRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

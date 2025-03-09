@@ -1,13 +1,18 @@
 const { Router } = require("express");
 const instrumentsController = require("../controllers/instrumentsController");
+const modelsController = require("../controllers/modelsController");
 
 const router = Router();
 
 router
   .route("/add")
-  .get(instrumentsController.renderAddInstrumentForm)
+  .get(
+    modelsController.getAllModels,
+    instrumentsController.renderAddInstrumentForm
+  )
   .post(
     instrumentsController.addInstrument,
+    modelsController.getAllModels,
     instrumentsController.renderAddInstrumentForm
   );
 

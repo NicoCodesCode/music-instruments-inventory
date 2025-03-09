@@ -61,3 +61,27 @@ exports.deleteInstrument = async (instrumentId) => {
   const sqlQuery = "DELETE FROM instruments WHERE instrument_id = $1";
   await pool.query(sqlQuery, [instrumentId]);
 };
+
+exports.getAllBrands = async () => {
+  const sqlQuery = "SELECT brand_id, brand_name FROM brands";
+  const { rows } = await pool.query(sqlQuery);
+  return rows;
+};
+
+exports.getAllCategories = async () => {
+  const sqlQuery = "SELECT category_id, category_name FROM categories";
+  const { rows } = await pool.query(sqlQuery);
+  return rows;
+};
+
+exports.addModel = async (modelData) => {
+  const sqlQuery =
+    "INSERT INTO models (model_name, brand_id, category_id, specifications, year_introduced) VALUES ($1, $2, $3, $4, $5)";
+  await pool.query(sqlQuery, [
+    modelData.modelName,
+    Number(modelData.brand),
+    Number(modelData.category),
+    modelData.specifications,
+    Number(modelData.yearIntroduced),
+  ]);
+};
