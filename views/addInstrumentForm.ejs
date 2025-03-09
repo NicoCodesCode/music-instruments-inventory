@@ -8,42 +8,31 @@
   <body>
     <h1><%= title %></h1>
     <form action="/instruments/add" method="POST">
-      <label for="image">Instrument Image:</label>
-      <input type="file" accept="image/jpeg" name="image" id="image" required />
+      <!-- <label for="image">Instrument Image:</label>
+      <input type="file" accept="image/jpeg" name="image" id="image" required /> -->
       <label for="model">Model:</label>
-      <input type="text" name="model" id="model" required />
-      <label for="brand">Brand:</label>
-      <input type="text" name="brand" id="brand" required />
-      <label for="made-in">Made In:</label>
-      <input type="text" name="country" id="made-in" required />
-      <label for="year">Year Introduced:</label>
-      <input
-        type="number"
-        min="1900"
-        max="2108"
-        name="yearIntroduced"
-        required
-      />
+      <select name="model" id="model">
+        <option value="">-- Select a Model --</option>
+        <% models.map(model => { %>
+        <option value="<%= model.model_id %>"><%= model.model_name %></option>
+        <% }) %>
+      </select>
       <label>Status:</label>
-      <input type="radio" name="newStatus" id="in-stock" value="In Stock" />
+      <input
+        type="radio"
+        name="status"
+        id="in-stock"
+        value="In Stock"
+        checked
+      />
       <label for="in-stock">In Stock</label>
-      <input type="radio" name="newStatus" id="sold-out" value="Sold Out" />
+      <input type="radio" name="status" id="sold-out" value="Sold Out" />
       <label for="sold-out">Sold Out</label>
-      <label for="newPrice">Price: </label>
-      <input type="number" name="newPrice" id="price" step=".01" required />
-      <label for="specifications">Specs: </label>
-      <textarea
-        name="newSpecifications"
-        id="specifications"
-        required
-      ></textarea>
+      <label for="price">Price: </label>
+      <input type="number" name="price" id="price" step=".01" required />
       <label for="admin-password">Admin Password: </label>
       <input type="password" name="adminPassword" required />
-      <ul>
-        <% if (locals.errors) { locals.errors.map(error => { %>
-        <li><%= error.msg %></li>
-        <% })} %>
-      </ul>
+      <%- include("partials/formErrors") %>
       <button type="submit">Add</button>
       <a href="/">
         <button type="button">Go Back</button>

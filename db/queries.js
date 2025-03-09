@@ -41,6 +41,18 @@ exports.editInstrument = async (instrumentId, newInstrumentData) => {
   ]);
 };
 
+exports.getAllModels = async () => {
+  const sqlQuery = "SELECT model_id, model_name FROM models";
+  const { rows } = await pool.query(sqlQuery);
+  return rows;
+};
+
 exports.addInstrument = async (instrumentData) => {
-  const sqlQuery = "";
+  const sqlQuery =
+    "INSERT INTO instruments (model_id, price, status_id) VALUES ($1, $2, (SELECT status_id FROM status WHERE status_name = $3))";
+  await pool.query(sqlQuery, [
+    Number(instrumentData.model),
+    Number(instrumentData.price),
+    instrumentData.status,
+  ]);
 };

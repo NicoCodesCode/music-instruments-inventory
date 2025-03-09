@@ -78,8 +78,9 @@ exports.editInstrument = [
   },
 ];
 
-exports.renderAddInstrumentForm = (req, res) => {
-  res.render("addInstrumentForm", { title: "Add Instrument" });
+exports.renderAddInstrumentForm = async (req, res) => {
+  const models = await db.getAllModels();
+  res.render("addInstrumentForm", { title: "Add Instrument", models });
 };
 
 exports.addInstrument = async (req, res) => {
