@@ -6,7 +6,10 @@ const router = Router();
 router
   .route("/add")
   .get(instrumentsController.renderAddInstrumentForm)
-  .post(instrumentsController.addInstrument);
+  .post(
+    instrumentsController.addInstrument,
+    instrumentsController.renderAddInstrumentForm
+  );
 
 router.get("/:instrumentId", instrumentsController.getInstrumentById);
 

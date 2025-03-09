@@ -1,8 +1,6 @@
 const { validationResult } = require("express-validator");
 const db = require("../db/queries");
-const {
-  validateEditInstrument,
-} = require("../validations/instrumentValidator");
+const validations = require("../validations/instrumentValidator");
 
 exports.getAllInstruments = async (req, res, next) => {
   const categoryQuery = req.query.category;
@@ -57,7 +55,7 @@ exports.renderEditInstrumentForm = async (req, res, next) => {
 };
 
 exports.editInstrument = [
-  validateEditInstrument,
+  validations.validateEditInstrument,
   async (req, res, next) => {
     const errors = validationResult(req);
 
@@ -81,19 +79,38 @@ exports.editInstrument = [
 exports.renderAddInstrumentForm = async (req, res, next) => {
   try {
     const models = await db.getAllModels();
+
+    if (req.errors) {
+      return res.status(400).render("addInstrumentForm", {
+        title: "Add Instrument",
+        models,
+        errors: req.errors,
+      });
+    }
+
     res.render("addInstrumentForm", { title: "Add Instrument", models });
   } catch (error) {
     next(error);
   }
 };
 
-exports.addInstrument = async (req, res, next) => {
-  const instrumentData = req.body;
+exports.addInstrument = [
+  validations.validateNewInstrument,
+  async (req, res, next) => {
+    const instrumentData = req.body;
 
-  try {
-    await db.addInstrument(instrumentData);
-    res.redirect("/");
-  } catch (error) {
-    next(error);
-  }
-};
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      req.errors = errors.array();
+      return next();
+    }
+
+    try {
+      await db.addInstrument(instrumentData);
+      res.redirect("/");
+    } catch (error) {
+      next(error);
+    }
+  },
+];
