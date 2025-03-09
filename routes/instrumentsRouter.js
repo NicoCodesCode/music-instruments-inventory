@@ -3,7 +3,10 @@ const instrumentsController = require("../controllers/instrumentsController");
 
 const router = Router();
 
-router.get("/add", instrumentsController.renderAddInstrumentForm);
+router
+  .route("/add")
+  .get(instrumentsController.renderAddInstrumentForm)
+  .post(instrumentsController.addInstrument);
 
 router.get("/:instrumentId", instrumentsController.getInstrumentById);
 

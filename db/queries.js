@@ -40,3 +40,7 @@ exports.editInstrument = async (instrumentId, newInstrumentData) => {
     instrumentId,
   ]);
 };
+
+exports.addInstrument = async (instrumentData) => {
+  const sqlQuery = "";
+};

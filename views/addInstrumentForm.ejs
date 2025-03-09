@@ -7,5 +7,47 @@
   </head>
   <body>
     <h1><%= title %></h1>
+    <form action="/instruments/add" method="POST">
+      <label for="image">Instrument Image:</label>
+      <input type="file" accept="image/jpeg" name="image" id="image" required />
+      <label for="model">Model:</label>
+      <input type="text" name="model" id="model" required />
+      <label for="brand">Brand:</label>
+      <input type="text" name="brand" id="brand" required />
+      <label for="made-in">Made In:</label>
+      <input type="text" name="country" id="made-in" required />
+      <label for="year">Year Introduced:</label>
+      <input
+        type="number"
+        min="1900"
+        max="2108"
+        name="yearIntroduced"
+        required
+      />
+      <label>Status:</label>
+      <input type="radio" name="newStatus" id="in-stock" value="In Stock" />
+      <label for="in-stock">In Stock</label>
+      <input type="radio" name="newStatus" id="sold-out" value="Sold Out" />
+      <label for="sold-out">Sold Out</label>
+      <label for="newPrice">Price: </label>
+      <input type="number" name="newPrice" id="price" step=".01" required />
+      <label for="specifications">Specs: </label>
+      <textarea
+        name="newSpecifications"
+        id="specifications"
+        required
+      ></textarea>
+      <label for="admin-password">Admin Password: </label>
+      <input type="password" name="adminPassword" required />
+      <ul>
+        <% if (locals.errors) { locals.errors.map(error => { %>
+        <li><%= error.msg %></li>
+        <% })} %>
+      </ul>
+      <button type="submit">Add</button>
+      <a href="/">
+        <button type="button">Go Back</button>
+      </a>
+    </form>
   </body>
 </html>

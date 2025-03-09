@@ -81,3 +81,10 @@ exports.editInstrument = [
 exports.renderAddInstrumentForm = (req, res) => {
   res.render("addInstrumentForm", { title: "Add Instrument" });
 };
+
+exports.addInstrument = async (req, res) => {
+  const instrumentData = req.body;
+  console.log(instrumentData);
+  await db.addInstrument(instrumentData);
+  res.redirect("/");
+};
