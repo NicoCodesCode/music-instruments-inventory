@@ -56,3 +56,8 @@ exports.addInstrument = async (instrumentData) => {
     instrumentData.status,
   ]);
 };
+
+exports.deleteInstrument = async (instrumentId) => {
+  const sqlQuery = "DELETE FROM instruments WHERE instrument_id = $1";
+  await pool.query(sqlQuery, [instrumentId]);
+};

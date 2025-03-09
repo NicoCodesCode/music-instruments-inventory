@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form
+      action="/instruments/<%= instrumentId %>/delete?_method=DELETE"
+      method="POST"
+    >
+      <label for="admin-password">
+        Enter the admin password to delete this instrument:
+      </label>
+      <input
+        type="password"
+        name="adminPassword"
+        id="admin-password"
+        required
+      />
+      <%- include("partials/formErrors") %>
+      <button type="submit">Delete :C</button>
+    </form>
+    <a href="/instruments/<%= instrumentId %>"><button>Go Back</button></a>
+  </body>
+</html>

@@ -97,8 +97,6 @@ exports.renderAddInstrumentForm = async (req, res, next) => {
 exports.addInstrument = [
   validations.validateNewInstrument,
   async (req, res, next) => {
-    const instrumentData = req.body;
-
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -106,8 +104,48 @@ exports.addInstrument = [
       return next();
     }
 
+    const instrumentData = req.body;
+
     try {
       await db.addInstrument(instrumentData);
+      res.redirect("/");
+    } catch (error) {
+      next(error);
+    }
+  },
+];
+
+exports.renderDeleteInstrument = (req, res) => {
+  const instrumentId = req.params.instrumentId;
+
+  if (req.errors) {
+    return res.status(400).render("deleteInstrument", {
+      title: "Delete Instrument",
+      instrumentId,
+      errors: req.errors,
+    });
+  }
+
+  res.render("deleteInstrument", {
+    title: "Delete Instrument",
+    instrumentId,
+  });
+};
+
+exports.deleteInstrument = [
+  validations.validateAdminPassword,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      req.errors = errors.array();
+      return next();
+    }
+
+    const instrumentId = Number(req.params.instrumentId);
+
+    try {
+      await db.deleteInstrument(instrumentId);
       res.redirect("/");
     } catch (error) {
       next(error);

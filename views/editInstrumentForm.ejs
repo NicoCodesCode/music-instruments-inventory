@@ -35,9 +35,9 @@
       <input type="password" name="adminPassword" required />
       <%- include("partials/formErrors") %>
       <button type="submit">Update</button>
-      <a href="/instruments/<%= instrument.instrument_id %>">
-        <button type="button">Go Back</button>
-      </a>
     </form>
+    <a href="/instruments/<%= instrument.instrument_id %>">
+      <button type="button">Go Back</button>
+    </a>
   </body>
 </html>

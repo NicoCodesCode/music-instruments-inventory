@@ -21,4 +21,12 @@ router
     instrumentsController.renderEditInstrumentForm
   );
 
+router
+  .route("/:instrumentId/delete")
+  .get(instrumentsController.renderDeleteInstrument)
+  .delete(
+    instrumentsController.deleteInstrument,
+    instrumentsController.renderDeleteInstrument
+  );
+
 module.exports = router;
