@@ -2,32 +2,35 @@
 <html lang="en">
   <%- include("partials/head") %>
   <body>
-    <header>
-      <h1><%= title %></h1>
-      <a href="/instruments/add">Add Instrument</a>
-      <a href="/models/add">Add Model</a>
+    <header class="main-header">
+      <h1 class="page-title"><%= title %></h1>
+      <div class="header-links">
+        <a href="/instruments/add" class="header-link">Add Instrument</a>
+        <a href="/models/add" class="header-link">Add Model</a>
+      </div>
     </header>
-    <section>
-      <h2>Category:</h2>
-      <a href="/">All</a>
-      <a href="/?category=Guitar">Guitars</a>
-      <a href="/?category=Bass">Bass</a>
-      <a href="/?category=Drums">Drums</a>
-      <a href="/?category=Keyboard">Keyboard</a>
+    <section class="category-nav">
+      <h2 class="section-title">Category:</h2>
+      <a href="/" class="category-link">All</a>
+      <a href="/?category=Guitar" class="category-link">Guitars</a>
+      <a href="/?category=Bass" class="category-link">Bass</a>
+      <a href="/?category=Drums" class="category-link">Drums</a>
+      <a href="/?category=Keyboard" class="category-link">Keyboard</a>
     </section>
     <section>
-      <ul>
+      <ul class="instrument-grid">
         <% instruments.map(instrument => { %>
-        <li>
+        <li class="instrument-card">
           <img
             src="/images/instrument-<%= instrument.instrument_id %>.jpg"
             alt="<%= instrument.model_name %> image"
-            width="200"
-            height="200"
+            class="instrument-image"
           />
-          <p><%= instrument.brand_name.concat(" ", instrument.model_name) %></p>
+          <p class="instrument-name">
+            <%= instrument.brand_name.concat(" ", instrument.model_name) %>
+          </p>
           <a href="/instruments/<%= instrument.instrument_id %>">
-            <button>See Details</button>
+            <button class="btn card-button">See Details</button>
           </a>
         </li>
         <% }) %>

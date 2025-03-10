@@ -2,23 +2,31 @@
 <html lang="en">
   <%- include("partials/head") %>
   <body>
-    <h1><%= title %></h1>
+    <h1 class="page-title"><%= title %></h1>
     <form
       action="/instruments/<%= instrumentId %>/delete?_method=DELETE"
       method="POST"
+      class="form-container"
     >
-      <label for="admin-password">
-        Enter the admin password to delete this instrument:
-      </label>
-      <input
-        type="password"
-        name="adminPassword"
-        id="admin-password"
-        required
-      />
-      <%- include("partials/formErrors") %>
-      <button type="submit">Delete :C</button>
+      <div class="form-group">
+        <label for="admin-password" class="form-label">
+          Enter the admin password to delete this instrument:
+        </label>
+        <input
+          type="password"
+          name="adminPassword"
+          id="admin-password"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <div class="error-list"><%- include("partials/formErrors") %></div>
+
+      <button type="submit" class="btn btn-danger">Delete :C</button>
+      <a href="/instruments/<%= instrumentId %>">
+        <button type="button" class="btn btn-secondary">Go Back</button>
+      </a>
     </form>
-    <a href="/instruments/<%= instrumentId %>"><button>Go Back</button></a>
   </body>
 </html>

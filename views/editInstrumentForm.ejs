@@ -2,38 +2,79 @@
 <html lang="en">
   <%- include("partials/head") %>
   <body>
-    <h1><%= title %></h1>
+    <h1 class="page-title"><%= title %></h1>
     <form
       action="/instruments/<%= instrument.instrument_id %>/edit?_method=PUT"
       method="POST"
+      class="form-container"
     >
-      <label>Status:</label>
-      <input type="radio" name="newStatus" id="in-stock" value="In Stock" <%=
-      instrument.status_name === "In Stock" ? "checked" : "" %> required />
-      <label for="in-stock">In Stock</label>
-      <input type="radio" name="newStatus" id="sold-out" value="Sold Out" <%=
-      instrument.status_name === "Sold Out" ? "checked" : "" %> />
-      <label for="sold-out">Sold Out</label>
-      <label for="newPrice">Price: </label>
-      <input
-        type="number"
-        name="newPrice"
-        id="price"
-        value="<%= instrument.price %>"
-        step=".01"
-        required
-      />
-      <label for="specifications">Specs: </label>
-      <textarea name="newSpecifications" id="specifications" required>
-<%= instrument.specifications %></textarea
-      >
-      <label for="admin-password">Admin Password: </label>
-      <input type="password" name="adminPassword" required />
-      <%- include("partials/formErrors") %>
-      <button type="submit">Update</button>
+      <div class="form-group">
+        <label class="form-label">Status:</label>
+        <div class="radio-group">
+          <div class="form-check">
+            <input
+              type="radio"
+              name="status"
+              id="in-stock"
+              value="In Stock"
+              checked
+              class="form-check-input"
+            />
+            <label for="in-stock">In Stock</label>
+          </div>
+          <div class="form-check">
+            <input
+              type="radio"
+              name="status"
+              id="sold-out"
+              value="Sold Out"
+              class="form-check-input"
+            />
+            <label for="sold-out">Sold Out</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="price" class="form-label">Price: </label>
+        <input
+          type="number"
+          name="price"
+          id="price"
+          step=".01"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="specifications" class="form-label">Specs: </label>
+        <textarea
+          name="newSpecifications"
+          id="specifications"
+          class="form-control"
+          required
+        >
+  <%= instrument.specifications %></textarea
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="admin-password" class="form-label">Admin Password: </label>
+        <input
+          type="password"
+          name="adminPassword"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="error-list"><%- include("partials/formErrors") %></div>
+
+      <button type="submit" class="btn">Update</button>
+      <a href="/instruments/<%= instrument.instrument_id %>">
+        <button type="button" class="btn btn-secondary">Go Back</button>
+      </a>
     </form>
-    <a href="/instruments/<%= instrument.instrument_id %>">
-      <button type="button">Go Back</button>
-    </a>
   </body>
 </html>
